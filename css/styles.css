@@ -28,6 +28,10 @@ main{
     display: flex;
 }
 
+.categories{
+    width: 9.5%;
+}
+
 .categories li{
     list-style: none;
     margin-bottom: 10%;
@@ -42,4 +46,12 @@ main{
 
 .categories ul{
     padding: 0px;
+}
+
+.content{
+    width: 90.5%;
+}
+
+.content h2{
+    text-align: center;
 }
