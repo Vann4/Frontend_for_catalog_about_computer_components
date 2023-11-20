@@ -50,8 +50,29 @@ main{
 
 .content{
     width: 90.5%;
+    text-align: center;
 }
 
 .content h2{
     text-align: center;
+}
+
+.characteristic_name_processors{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.characteristic_name_processors p{
+    width: 50%;
+    font-size: 1.5em;
+}
+
+.characteristic_name_processors hr{
+    width: 100%;
+    height: 5px;
+    background-color: black;
+}
+
+#processors{
+    width: 100%;
 }
