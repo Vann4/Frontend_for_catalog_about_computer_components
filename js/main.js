@@ -30,15 +30,19 @@ fetch(url)
           product_tag_p.textContent = "Товар";
           characteristics_goods.appendChild(product_tag_p);
 
+          let appellation_goods_tag_p = document.createElement('p'); //Для названий товара
+          appellation_goods_tag_p.textContent = array_good.appellation_good;
+          characteristics_goods.appendChild(appellation_goods_tag_p);
+
           if (product_tag_p.textContent == "Товар"){
             let characteristics_goods_tag_hr = document.createElement('hr');
             product_tag_p.before(characteristics_goods_tag_hr);
           }
-
-          let appellation_goods_tag_p = document.createElement('p'); //Для названий товара
-
-          appellation_goods_tag_p.textContent = array_good.appellation_good;
-          characteristics_goods.appendChild(appellation_goods_tag_p);
+        
+          let description_goods_tag_p = document.createElement('p'); //Для вывода описания товара
+          description_goods_tag_p.textContent = array_good.description;
+          description_goods_tag_p.setAttribute("id", "description_goods");
+          characteristics_goods.appendChild(description_goods_tag_p);
 
           for(let jj=0; jj<array_good.characteristic.length; jj++){
             array_characteristic = array_good.characteristic[jj];
