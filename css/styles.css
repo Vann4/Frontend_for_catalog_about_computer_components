@@ -67,6 +67,10 @@ main{
     font-size: 1.5em;
 }
 
+#description_goods{
+    width: 100%;
+}
+
 .characteristics_goods hr{
     width: 100%;
     height: 5px;
