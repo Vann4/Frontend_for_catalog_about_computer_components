@@ -2,6 +2,7 @@ body{
     max-width: 80vw;
     padding: 0px;
     margin: 0 auto;
+    font-family: "Roboto", "Arial", sans-serif;
 }
 
 header{
@@ -79,4 +80,39 @@ main{
 
 .content_categories{
     width: 100%;
+}
+
+#myModal {
+    width: 13%; 
+    height: 218px;
+    padding: 18px 9px;
+    border-radius: 4px;
+    background: #fafafa;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    margin: auto;
+    display: none;
+    opacity: 0;
+    z-index: 38;
+    text-align: center;
+}
+
+#myModal #myModal__close {
+    width: 8%; 
+    height: 12%;
+    position: absolute;
+    font-size: 1.5em;
+    top: 1px; right: 11px;
+    cursor: pointer;
+    display: block;
+}
+
+#myOverlay {
+    z-index: 37;
+    position: fixed;
+    background: rgba(0,0,0,.7);
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    cursor: pointer;
+    display: none;
 }
