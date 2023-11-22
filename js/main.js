@@ -1,7 +1,7 @@
-let ul_category = document.querySelector('#category')
-let characteristics_goods= document.querySelector('.characteristics_goods')
+let ul_category = document.querySelector('#category');
+let characteristics_goods= document.querySelector('.characteristics_goods');
 
-const url = 'http://127.0.0.1:8000/category/'
+const url = 'http://127.0.0.1:8000/category/';
 
 fetch(url)
   .then((resp) => resp.json())
@@ -60,5 +60,64 @@ fetch(url)
         // console.log(array_data)
     }
   }).catch(function(error) {
-    console.log('Request failed', error);
+    console.log('Категории не получены', error);
   });
+
+
+// const url_owner = 'http://127.0.0.1:8000/owners/'
+
+// fetch(url_owner)
+//   .then((resp) => resp.json())
+//   .then(function(data) {
+//     console.log(data)
+//     for (let i=0; i<data.length; i++){
+//         let array_data = data[i]; //Получение данных из массива
+//         console.log(array_data)
+//     }
+    
+//   }).catch(function(error) {
+//     console.log('Request failed', error);
+//   });
+
+// Get form element
+const form_create_goods = document.querySelector('#create_goods');
+
+// Add submit event listener
+form_create_goods.addEventListener('submit', (event) => {
+  event.preventDefault();
+  console.log('prevented');
+
+  // Get data from form
+  const appellation_good = form_create_goods.querySelector('#appellation_good').value;
+  const description = form_create_goods.querySelector('#description').value;
+  const category_id = form_create_goods.querySelector('#category_id').value;
+  const owner_id = form_create_goods.querySelector('#owner_id').value;
+
+  fetch('http://127.0.0.1:8000/good/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({appellation_good, description, category_id, owner_id})
+  })
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
+});
+
+// Всплывающее окно для добавления товара
+$(document).ready(function () {
+  $("a.myLinkModal").click(function (event) {
+      event.preventDefault();
+      $("#myOverlay").fadeIn(297, function () {
+          $("#myModal")
+              .css("display", "block")
+              .animate({ opacity: 1 }, 198);
+      });
+  });
+
+  $("#myModal__close, #myOverlay").click(function () {
+      $("#myModal").animate({ opacity: 0 }, 198, function () {
+          $(this).css("display", "none");
+          $("#myOverlay").fadeOut(297);
+      });
+  });
+});
