@@ -14,8 +14,29 @@
             <img src="logo_comp_pk(1).png" alt="Логотип">
         </div>
         <div class="help">
-            <p>Помощь</p>
-        </div>
+            
+            <a class="myLinkModal" href="#">Добавить товар</a>
+
+            <div id="myModal">
+                <form id="create_goods">
+                    <label for="appellation_good">Название товара:</label>
+                    <input type="text" id="appellation_good" name="appellation_good"><br>
+
+                    <label for="description">Описание:</label>
+                    <input type="text" id="description" name="description"><br>
+                
+                    <label for="category_id">id категории:</label>
+                    <input type="number" id="category_id" name="category_id"><br>
+
+                    <label for="owner_id">id владельца:</label>
+                    <input type="number" id="owner_id" name="owner_id"><br>
+                
+                    <input type="submit" value="Отправить">
+                </form>
+                <span id="myModal__close" class="close">X</span>
+            </div>
+            <div id="myOverlay"></div>
+        </div> <!-- class="help" -->
         <div class="info">
             <p>Свзяь с администратором сайта: 1vetlan1@mail.ru</p>
         </div>
@@ -32,6 +53,7 @@
         </div>
     </main>
 
+<script src="js/jquery-3.7.1.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
