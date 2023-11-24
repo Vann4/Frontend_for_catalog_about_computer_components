@@ -14,28 +14,50 @@
             <img src="logo_comp_pk(1).png" alt="Логотип">
         </div>
         <div class="help">
-            
-            <a class="myLinkModal" href="#">Добавить товар</a>
 
-            <div id="myModal">
-                <form id="create_goods">
-                    <label for="appellation_good">Название товара:</label>
-                    <input type="text" id="appellation_good" name="appellation_good"><br>
+            <button class="header_button" id="modal-trigger">Добавить товар</button>
 
-                    <label for="description">Описание:</label>
-                    <input type="text" id="description" name="description"><br>
-                
-                    <label for="category_id">id категории:</label>
-                    <input type="number" id="category_id" name="category_id"><br>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">X</span>
+                    <form id="create_goods">
+                        <label for="appellation_good">Название товара:</label>
+                        <input class="input" type="text" id="appellation_good" name="appellation_good"><br>
 
-                    <label for="owner_id">id владельца:</label>
-                    <input type="number" id="owner_id" name="owner_id"><br>
-                
-                    <input type="submit" value="Отправить">
-                </form>
-                <span id="myModal__close" class="close">X</span>
+                        <label for="description">Описание:</label>
+                        <input class="input" type="text" id="description" name="description"><br>
+                    
+                        <label for="category_name">Название категории:</label>
+                        <input class="input" type="text" id="category_name" name="category_name"><br>
+
+                        <label for="owner_id">id владельца:</label>
+                        <input class="input" type="number" id="owner_id" name="owner_id"><br>
+                    
+                        <input class="submit_create_good" type="submit" value="Отправить">
+                    </form>
+                </div> <!--class="modal-content"-->
+            </div> <!-- id="Modal" -->
+
+            <button class="header_button" id="modal-trigger_characteristics">Добавить свойства товара</button>
+
+            <div id="myModal_characteristics" class="modal_characteristics">
+                <div class="modal-content-characteristics">
+                    <span class="close">X</span>
+                    <form id="create_characteristics">
+                        <label for="characteristic_name">Название свойства:</label>
+                        <input class="input" type="text" id="characteristic_name" name="characteristic_name"><br>
+                        
+                        <label for="characteristic">Свойство:</label>
+                        <input class="input" type="text" id="characteristic" name="characteristic"><br>
+
+                        <label for="goods_id">id товара:</label>
+                        <input class="input" type="number" id="goods_id" name="goods_id"><br>
+                    
+                        <input class="submit_create_characteristics" type="submit" value="Отправить">
+                    </form>
+                </div>
             </div>
-            <div id="myOverlay"></div>
+
         </div> <!-- class="help" -->
         <div class="info">
             <p>Свзяь с администратором сайта: 1vetlan1@mail.ru</p>
