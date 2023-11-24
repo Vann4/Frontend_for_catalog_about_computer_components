@@ -6,15 +6,15 @@ const url = 'http://127.0.0.1:8000/category/';
 fetch(url)
   .then((resp) => resp.json())
   .then(function(data) {
-    console.log(data)
+    console.log(data);
     for (let i=0; i<data.length; i++){
         let array_data = data[i]; //Получение данных из массива
         let li_category = document.createElement('li');
-        li_category.textContent = array_data.appellation_category
+        li_category.textContent = array_data.appellation_category;
 
         let id_name = "category" + i;
-        li_category.setAttribute("id", id_name)
-        ul_category.appendChild(li_category)
+        li_category.setAttribute("id", id_name);
+        ul_category.appendChild(li_category);
 
         let characteristics_goods_tag_h2 = document.createElement('h2');
         characteristics_goods_tag_h2.textContent = array_data.appellation_category;
@@ -23,8 +23,7 @@ fetch(url)
         characteristics_goods.appendChild(characteristics_goods_tag_h2);
 
         for(let j=0; j<array_data.good.length; j++){
-          array_good = array_data.good[j]
-          console.log(array_good)
+          array_good = array_data.good[j];
           
           let product_tag_p = document.createElement('p'); //Для подписи "товар"
           product_tag_p.textContent = "Товар";
@@ -38,7 +37,15 @@ fetch(url)
             let characteristics_goods_tag_hr = document.createElement('hr');
             product_tag_p.before(characteristics_goods_tag_hr);
           }
-        
+          
+          let id_good_tag_p = document.createElement('p'); //Для подписи "id товара"
+          id_good_tag_p.textContent = "id товара";
+          characteristics_goods.appendChild(id_good_tag_p);
+
+          let id_goods_tag_p = document.createElement('p'); //Для вывода id товара
+          id_goods_tag_p.textContent = array_good.id;
+          characteristics_goods.appendChild(id_goods_tag_p);
+
           let description_goods_tag_p = document.createElement('p'); //Для вывода описания товара
           description_goods_tag_p.textContent = array_good.description;
           description_goods_tag_p.setAttribute("id", "description_goods");
@@ -46,7 +53,6 @@ fetch(url)
 
           for(let jj=0; jj<array_good.characteristic.length; jj++){
             array_characteristic = array_good.characteristic[jj];
-            // console.log(array_characteristic)
 
             let characteristics_goods_tag_p = document.createElement('p');
             characteristics_goods_tag_p.textContent = array_characteristic.characteristic_name;
@@ -57,12 +63,10 @@ fetch(url)
             characteristics_goods.appendChild(characteristic_processors_tag_p);
           }
         }
-        // console.log(array_data)
     }
   }).catch(function(error) {
     console.log('Категории не получены', error);
   });
-
 
 // const url_owner = 'http://127.0.0.1:8000/owners/'
 
@@ -79,18 +83,68 @@ fetch(url)
 //     console.log('Request failed', error);
 //   });
 
+
+let modal = document.getElementById("myModal");
+let modal_characteristics = document.getElementById("myModal_characteristics");
+
+let btn = document.getElementById("modal-trigger");
+let btn_characteristics = document.getElementById("modal-trigger_characteristics");
+
+let span = document.getElementsByClassName("close")[0];
+let span_characteristics = document.getElementsByClassName("close")[1];
+
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+btn_characteristics.onclick = function() {
+  modal_characteristics.style.display = "block";
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+span_characteristics.onclick = function() {
+  modal_characteristics.style.display = "none";
+}
+
+window.addEventListener("keyup", function(e) {
+    if (e.keyCode === 27) {
+        modal.style.display = "none";
+    }
+})
+
+window.addEventListener("keyup", function(e) {
+  if (e.keyCode === 27) {
+      modal_characteristics.style.display = "none";
+  }
+})
+
 // Get form element
 const form_create_goods = document.querySelector('#create_goods');
-
+console.log(form_create_goods)
 // Add submit event listener
 form_create_goods.addEventListener('submit', (event) => {
   event.preventDefault();
-  console.log('prevented');
 
   // Get data from form
   const appellation_good = form_create_goods.querySelector('#appellation_good').value;
   const description = form_create_goods.querySelector('#description').value;
-  const category_id = form_create_goods.querySelector('#category_id').value;
+
+  const cases = {
+    "Процессор": () => 1,
+    "Материнские платы": () => 2,
+    "Видеокарты": () => 3,
+    "Оперативная память": () => 5,
+    "Хранение данных": () => 6,
+    "Охлаждение процессора": () => 7,
+    "Блоки питания": () => 4,
+  };
+
+  const category_name = form_create_goods.querySelector('#category_name').value;
+  const category_id = cases[category_name]();
+
   const owner_id = form_create_goods.querySelector('#owner_id').value;
 
   fetch('http://127.0.0.1:8000/good/', {
@@ -99,25 +153,25 @@ form_create_goods.addEventListener('submit', (event) => {
     body: JSON.stringify({appellation_good, description, category_id, owner_id})
   })
   .then((response) => response.json())
-  .then((result) => console.log(result))
+  .then((result) => alert(`id товара: ${result.id}`))
   .catch((error) => console.error(error));
 });
 
-// Всплывающее окно для добавления товара
-$(document).ready(function () {
-  $("a.myLinkModal").click(function (event) {
-      event.preventDefault();
-      $("#myOverlay").fadeIn(297, function () {
-          $("#myModal")
-              .css("display", "block")
-              .animate({ opacity: 1 }, 198);
-      });
-  });
+const form_create_characteristics = document.querySelector('#create_characteristics');
 
-  $("#myModal__close, #myOverlay").click(function () {
-      $("#myModal").animate({ opacity: 0 }, 198, function () {
-          $(this).css("display", "none");
-          $("#myOverlay").fadeOut(297);
-      });
-  });
+form_create_characteristics.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const characteristic_name = form_create_characteristics.querySelector('#characteristic_name').value;
+  const characteristic = form_create_characteristics.querySelector('#characteristic').value;
+  const goods_id = form_create_characteristics.querySelector('#goods_id').value;
+
+  fetch('http://127.0.0.1:8000/product_characteristic/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({characteristic_name, characteristic, goods_id})
+  })
+  .then((response) => response.json())
+  .then(() => alert('Свойство добавлено'))
+  .catch((error) => console.error(error));
 });
