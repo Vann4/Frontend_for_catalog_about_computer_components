@@ -96,13 +96,15 @@ main{
 
 #modal_trigger,
 #modal_trigger_characteristics,
-#modal_trigger_create_owner{
+#modal_trigger_create_owner,
+#modal_trigger_owners{
     cursor: pointer;
 }
 
 .modal,
 .modal_characteristics,
-.modal_create_owner{
+.modal_create_owner,
+.modal_owners{
     display: none;
     position: fixed;
     z-index: 1;
@@ -117,17 +119,29 @@ main{
 
 .modal_content,
 .modal_content_characteristics,
-.modal_content_create_owner{
+.modal_content_create_owner,
+.modal_content_owners{
     background-color: #fefefe;
-    margin: 15% auto; 
+    margin: 15% auto;
     padding: 10px;
     border: 1px solid #888;
     width: 11%; 
 }
 
+.modal_content_owners{
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
 .input{
     width: 96%;
     font-size: 1em;
+}
+
+#close_owners{
+    margin-left: 99%;
 }
 
 .close{
@@ -140,4 +154,12 @@ main{
 .submit_create_characteristics,
 .submit_create_owner{
     margin-left: 30%;
+}
+
+.headers_owners{
+    width: 20%;
+}
+
+.body_owners{
+    width: 20%;
 }
