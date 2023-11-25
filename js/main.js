@@ -62,39 +62,76 @@ fetch(url)
             characteristic_processors_tag_p.textContent = array_characteristic.characteristic;
             characteristics_goods.appendChild(characteristic_processors_tag_p);
           }
+
+          let owners_tag_p = document.createElement('p');
+          owners_tag_p.textContent = 'id владельца';
+          characteristics_goods.appendChild(owners_tag_p);
+
+          let owners_id_tag_p = document.createElement('p'); //Вывод id владельца
+          owners_id_tag_p.textContent = array_good.owner_id;
+          characteristics_goods.appendChild(owners_id_tag_p);
+        
         }
     }
   }).catch(function(error) {
     console.log('Категории не получены', error);
   });
 
-// const url_owner = 'http://127.0.0.1:8000/owners/'
+const url_owner = 'http://127.0.0.1:8000/owners/'
+const modal_content_owners = document.querySelector(".modal_content_owners");
 
-// fetch(url_owner)
-//   .then((resp) => resp.json())
-//   .then(function(data) {
-//     console.log(data)
-//     for (let i=0; i<data.length; i++){
-//         let array_data = data[i]; //Получение данных из массива
-//         console.log(array_data)
-//     }
+fetch(url_owner)
+  .then((resp) => resp.json())
+  .then(function(data) {
+    console.log(data)
+    for (let i=0; i<data.length; i++){
+      let array_owners = data[i]; //Получение данных из массива
+
+      let owners_id_tag_p = document.createElement('p');
+      owners_id_tag_p.textContent = array_owners.id;
+      owners_id_tag_p.setAttribute("class", "body_owners");
+      modal_content_owners.appendChild(owners_id_tag_p);
+
+      let owners_name_tag_p = document.createElement('p');
+      owners_name_tag_p.textContent = array_owners.name;
+      owners_name_tag_p.setAttribute("class", "body_owners");
+      modal_content_owners.appendChild(owners_name_tag_p);
+
+      let owners_surname_tag_p = document.createElement('p');
+      owners_surname_tag_p.textContent = array_owners.surname;
+      owners_surname_tag_p.setAttribute("class", "body_owners");
+      modal_content_owners.appendChild(owners_surname_tag_p);
+
+      let owners_patronymic_tag_p = document.createElement('p');
+      owners_patronymic_tag_p.textContent = array_owners.patronymic;
+      owners_patronymic_tag_p.setAttribute("class", "body_owners");
+      modal_content_owners.appendChild(owners_patronymic_tag_p);
+
+      let owners_email_tag_p = document.createElement('p');
+      owners_email_tag_p.textContent = array_owners.email;
+      owners_email_tag_p.setAttribute("class", "body_owners");
+      modal_content_owners.appendChild(owners_email_tag_p);
+    }
     
-//   }).catch(function(error) {
-//     console.log('Request failed', error);
-//   });
+  }).catch(function(error) {
+    console.log('Request failed', error);
+  });
 
 
 let modal = document.getElementById("myModal");
 let modal_characteristics = document.getElementById("myModal_characteristics");
 let modal_create_owner = document.getElementById("myModal_create_owner");
+let modal_owners = document.getElementById("myModal_owners");
 
 let btn = document.getElementById("modal_trigger");
 let btn_characteristics = document.getElementById("modal_trigger_characteristics");
 let btn_owner = document.getElementById("modal_trigger_create_owner");
+let btn_owners = document.getElementById("modal_trigger_owners");
 
 let span = document.getElementsByClassName("close")[0];
 let span_characteristics = document.getElementsByClassName("close")[1];
 let span_owner = document.getElementsByClassName("close")[2];
+let span_owners = document.getElementsByClassName("close")[3];
 
 btn.onclick = function() {
   modal.style.display = "block";
@@ -108,6 +145,10 @@ btn_owner.onclick = function() {
   modal_create_owner.style.display = "block";
 }
 
+btn_owners.onclick = function() {
+  modal_owners.style.display = "block";
+}
+
 span.onclick = function() {
   modal.style.display = "none";
 }
@@ -118,6 +159,10 @@ span_characteristics.onclick = function() {
 
 span_owner.onclick = function() {
   modal_create_owner.style.display = "none";
+}
+
+span_owners.onclick = function() {
+  modal_owners.style.display = "none";
 }
 
 window.addEventListener("keyup", function(e) {
