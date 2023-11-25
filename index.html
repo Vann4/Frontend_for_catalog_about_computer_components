@@ -15,10 +15,10 @@
         </div>
         <div class="help">
 
-            <button class="header_button" id="modal-trigger">Добавить товар</button>
+            <button class="header_button" id="modal_trigger">Добавить товар</button>
 
             <div id="myModal" class="modal">
-                <div class="modal-content">
+                <div class="modal_content">
                     <span class="close">X</span>
                     <form id="create_goods">
                         <label for="appellation_good">Название товара:</label>
@@ -36,12 +36,12 @@
                         <input class="submit_create_good" type="submit" value="Отправить">
                     </form>
                 </div> <!--class="modal-content"-->
-            </div> <!-- id="Modal" -->
+            </div> <!-- class="modal" -->
 
-            <button class="header_button" id="modal-trigger_characteristics">Добавить свойства товара</button>
+            <button class="header_button" id="modal_trigger_characteristics">Добавить свойство товара</button>
 
             <div id="myModal_characteristics" class="modal_characteristics">
-                <div class="modal-content-characteristics">
+                <div class="modal_content_characteristics">
                     <span class="close">X</span>
                     <form id="create_characteristics">
                         <label for="characteristic_name">Название свойства:</label>
@@ -56,9 +56,32 @@
                         <input class="submit_create_characteristics" type="submit" value="Отправить">
                     </form>
                 </div>
-            </div>
+            </div> <!--class="modal_characteristics"-->
 
+            <button class="header_button" id="modal_trigger_create_owner">Регистрация владельца</button>
+
+            <div id="myModal_create_owner" class="modal_create_owner">
+                <div class="modal_content_create_owner">
+                    <span class="close">X</span>
+                    <form id="create_owner">
+                        <label for="surname">Фамилия:</label>
+                        <input class="input" type="text" id="surname" name="surname"><br>
+                        
+                        <label for="name">Имя:</label>
+                        <input class="input" type="text" id="name" name="name"><br>
+
+                        <label for="patronymic">Отчество:</label>
+                        <input class="input" type="text" id="patronymic" name="patronymic"><br>
+
+                        <label for="email">Email:</label>
+                        <input class="input" type="email" id="email" name="email"><br>
+                    
+                        <input class="submit_create_owner" type="submit" value="Отправить">
+                    </form>
+                </div>
+            </div> <!--class="modal_characteristics"-->
         </div> <!-- class="help" -->
+
         <div class="info">
             <p>Свзяь с администратором сайта: 1vetlan1@mail.ru</p>
         </div>
