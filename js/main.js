@@ -86,27 +86,38 @@ fetch(url)
 
 let modal = document.getElementById("myModal");
 let modal_characteristics = document.getElementById("myModal_characteristics");
+let modal_create_owner = document.getElementById("myModal_create_owner");
 
-let btn = document.getElementById("modal-trigger");
-let btn_characteristics = document.getElementById("modal-trigger_characteristics");
+let btn = document.getElementById("modal_trigger");
+let btn_characteristics = document.getElementById("modal_trigger_characteristics");
+let btn_owner = document.getElementById("modal_trigger_create_owner");
 
 let span = document.getElementsByClassName("close")[0];
 let span_characteristics = document.getElementsByClassName("close")[1];
+let span_owner = document.getElementsByClassName("close")[2];
 
 btn.onclick = function() {
-    modal.style.display = "block";
+  modal.style.display = "block";
 }
 
 btn_characteristics.onclick = function() {
   modal_characteristics.style.display = "block";
 }
 
+btn_owner.onclick = function() {
+  modal_create_owner.style.display = "block";
+}
+
 span.onclick = function() {
-    modal.style.display = "none";
+  modal.style.display = "none";
 }
 
 span_characteristics.onclick = function() {
   modal_characteristics.style.display = "none";
+}
+
+span_owner.onclick = function() {
+  modal_create_owner.style.display = "none";
 }
 
 window.addEventListener("keyup", function(e) {
@@ -121,6 +132,12 @@ window.addEventListener("keyup", function(e) {
   }
 })
 
+window.addEventListener("keyup", function(e) {
+  if (e.keyCode === 27) {
+      modal_create_owner.style.display = "none";
+  }
+})
+
 // Get form element
 const form_create_goods = document.querySelector('#create_goods');
 console.log(form_create_goods)
@@ -131,6 +148,7 @@ form_create_goods.addEventListener('submit', (event) => {
   // Get data from form
   const appellation_good = form_create_goods.querySelector('#appellation_good').value;
   const description = form_create_goods.querySelector('#description').value;
+  const category_name = form_create_goods.querySelector('#category_name').value;
 
   const cases = {
     "Процессор": () => 1,
@@ -142,7 +160,6 @@ form_create_goods.addEventListener('submit', (event) => {
     "Блоки питания": () => 4,
   };
 
-  const category_name = form_create_goods.querySelector('#category_name').value;
   const category_id = cases[category_name]();
 
   const owner_id = form_create_goods.querySelector('#owner_id').value;
@@ -153,7 +170,7 @@ form_create_goods.addEventListener('submit', (event) => {
     body: JSON.stringify({appellation_good, description, category_id, owner_id})
   })
   .then((response) => response.json())
-  .then((result) => alert(`id товара: ${result.id}`))
+  .then((result) => alert('Добавлен новый товар'))
   .catch((error) => console.error(error));
 });
 
@@ -174,4 +191,31 @@ form_create_characteristics.addEventListener('submit', (event) => {
   .then((response) => response.json())
   .then(() => alert('Свойство добавлено'))
   .catch((error) => console.error(error));
+});
+
+const form_create_owner = document.querySelector('#create_owner');
+
+form_create_owner.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const surname = form_create_owner.querySelector('#surname').value;
+  const name = form_create_owner.querySelector('#name').value;
+  const patronymic = form_create_owner.querySelector('#patronymic').value;
+  const email = form_create_owner.querySelector('#email').value;
+
+  fetch('http://127.0.0.1:8000/owner/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({surname, name, patronymic, email})
+  })
+  .then(function(response) {
+    if (response.status >= 200 && response.status < 300) {
+      return response.text();
+    }
+    throw new Error(response.statusText);
+  })
+  .then(() => alert('Зарегистрирован новый владелец'))
+  .catch(function() {
+    alert('Что-то пошло не так, возможно владелей с указанной почтой уже существует');
+  });
 });
