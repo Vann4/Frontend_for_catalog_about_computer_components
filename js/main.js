@@ -1,4 +1,4 @@
-let ul_category = document.querySelector('#category');
+let ul_category = document.querySelector('.all_categories');
 let characteristics_goods= document.querySelector('.characteristics_goods');
 
 const url = 'http://127.0.0.1:8000/category/';
@@ -12,26 +12,59 @@ fetch(url)
         let li_category = document.createElement('li');
         li_category.textContent = array_data.appellation_category;
 
-        let id_name = "category" + i;
+        let id_name = "category";
         li_category.setAttribute("id", id_name);
         ul_category.appendChild(li_category);
+
+        let characteristics_goods_tag_div = document.createElement('div');
+        characteristics_goods_tag_div.classList.add('content_goods');
+        characteristics_goods.appendChild(characteristics_goods_tag_div);
 
         let characteristics_goods_tag_h2 = document.createElement('h2');
         characteristics_goods_tag_h2.textContent = array_data.appellation_category;
         characteristics_goods_tag_h2.classList.add('content_categories');
+        characteristics_goods_tag_div.appendChild(characteristics_goods_tag_h2);
 
-        characteristics_goods.appendChild(characteristics_goods_tag_h2);
+        if (array_data.id == 1){
+          characteristics_goods_tag_div.classList.add('is_active');
+        } else {
+          characteristics_goods_tag_div.classList.add('is_inactive');
+        }
+
+        const category_items = Array.from(document.querySelectorAll('#category'))
+        const content_goods_items = Array.from(document.querySelectorAll('.content_goods'))
+
+        const clearActiveClass = (element) => {
+          element.find(item => item.classList.remove('is_active'))
+          element.find(item => item.classList.add('is_inactive'))
+        }
+        
+        const setActiveClass = (element, index) => {
+          element[index].classList.add('is_active')
+          element[index].classList.remove('is_inactive')
+        }
+
+        const checkoutTabs = (item, index) => {
+          item.addEventListener('click', () => {
+
+            clearActiveClass(content_goods_items)
+            
+            setActiveClass(category_items, index)
+            setActiveClass(content_goods_items, index)
+          })
+        }
+        category_items.forEach(checkoutTabs)
 
         for(let j=0; j<array_data.good.length; j++){
           array_good = array_data.good[j];
-          
+
           let product_tag_p = document.createElement('p'); //Для подписи "товар"
           product_tag_p.textContent = "Товар";
-          characteristics_goods.appendChild(product_tag_p);
+          characteristics_goods_tag_div.appendChild(product_tag_p);
 
           let appellation_goods_tag_p = document.createElement('p'); //Для названий товара
           appellation_goods_tag_p.textContent = array_good.appellation_good;
-          characteristics_goods.appendChild(appellation_goods_tag_p);
+          characteristics_goods_tag_div.appendChild(appellation_goods_tag_p);
 
           if (product_tag_p.textContent == "Товар"){
             let characteristics_goods_tag_hr = document.createElement('hr');
@@ -40,37 +73,37 @@ fetch(url)
           
           let id_good_tag_p = document.createElement('p'); //Для подписи "id товара"
           id_good_tag_p.textContent = "id товара";
-          characteristics_goods.appendChild(id_good_tag_p);
+          characteristics_goods_tag_div.appendChild(id_good_tag_p);
 
           let id_goods_tag_p = document.createElement('p'); //Для вывода id товара
           id_goods_tag_p.textContent = array_good.id;
-          characteristics_goods.appendChild(id_goods_tag_p);
+          characteristics_goods_tag_div.appendChild(id_goods_tag_p);
 
           let description_goods_tag_p = document.createElement('p'); //Для вывода описания товара
           description_goods_tag_p.textContent = array_good.description;
           description_goods_tag_p.setAttribute("id", "description_goods");
-          characteristics_goods.appendChild(description_goods_tag_p);
+          characteristics_goods_tag_div.appendChild(description_goods_tag_p);
 
           for(let jj=0; jj<array_good.characteristic.length; jj++){
             array_characteristic = array_good.characteristic[jj];
 
             let characteristics_goods_tag_p = document.createElement('p');
             characteristics_goods_tag_p.textContent = array_characteristic.characteristic_name;
-            characteristics_goods.appendChild(characteristics_goods_tag_p);
+            characteristics_goods_tag_div.appendChild(characteristics_goods_tag_p);
 
             let characteristic_processors_tag_p = document.createElement('p');
             characteristic_processors_tag_p.textContent = array_characteristic.characteristic;
-            characteristics_goods.appendChild(characteristic_processors_tag_p);
+            characteristics_goods_tag_div.appendChild(characteristic_processors_tag_p);
           }
 
           let owners_tag_p = document.createElement('p');
           owners_tag_p.textContent = 'id владельца';
-          characteristics_goods.appendChild(owners_tag_p);
+          characteristics_goods_tag_div.appendChild(owners_tag_p);
 
           let owners_id_tag_p = document.createElement('p'); //Вывод id владельца
           owners_id_tag_p.textContent = array_good.owner_id;
-          characteristics_goods.appendChild(owners_id_tag_p);
-        
+          characteristics_goods_tag_div.appendChild(owners_id_tag_p);
+          
         }
     }
   }).catch(function(error) {
@@ -83,7 +116,6 @@ const modal_content_owners = document.querySelector(".modal_content_owners");
 fetch(url_owner)
   .then((resp) => resp.json())
   .then(function(data) {
-    console.log(data)
     for (let i=0; i<data.length; i++){
       let array_owners = data[i]; //Получение данных из массива
 
@@ -185,7 +217,7 @@ window.addEventListener("keyup", function(e) {
 
 // Get form element
 const form_create_goods = document.querySelector('#create_goods');
-console.log(form_create_goods)
+
 // Add submit event listener
 form_create_goods.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -195,17 +227,17 @@ form_create_goods.addEventListener('submit', (event) => {
   const description = form_create_goods.querySelector('#description').value;
   const category_name = form_create_goods.querySelector('#category_name').value;
 
-  const cases = {
-    "Процессор": () => 1,
+  const cases_category = {
+    "Процессоры": () => 1,
     "Материнские платы": () => 2,
     "Видеокарты": () => 3,
+    "Блоки питания": () => 4,
     "Оперативная память": () => 5,
     "Хранение данных": () => 6,
     "Охлаждение процессора": () => 7,
-    "Блоки питания": () => 4,
   };
 
-  const category_id = cases[category_name]();
+  const category_id = cases_category[category_name]();
 
   const owner_id = form_create_goods.querySelector('#owner_id').value;
 
@@ -215,7 +247,7 @@ form_create_goods.addEventListener('submit', (event) => {
     body: JSON.stringify({appellation_good, description, category_id, owner_id})
   })
   .then((response) => response.json())
-  .then((result) => alert('Добавлен новый товар'))
+  .then(() => alert('Добавлен новый товар'))
   .catch((error) => console.error(error));
 });
 
@@ -261,6 +293,6 @@ form_create_owner.addEventListener('submit', (event) => {
   })
   .then(() => alert('Зарегистрирован новый владелец'))
   .catch(function() {
-    alert('Что-то пошло не так, возможно владелей с указанной почтой уже существует');
+    alert('Что-то пошло не так, возможно владелец с указанной почтой уже существует');
   });
 });
