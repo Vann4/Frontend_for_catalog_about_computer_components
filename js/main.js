@@ -6,7 +6,6 @@ const url = 'http://127.0.0.1:8000/category/';
 fetch(url)
   .then((resp) => resp.json())
   .then(function(data) {
-    console.log(data);
     for (let i=0; i<data.length; i++){
         let array_data = data[i]; //Получение данных из массива
         let li_category = document.createElement('li');
@@ -233,7 +232,6 @@ form_create_goods.addEventListener('submit', (event) => {
   fetch(url_category)
     .then((resp) => resp.json())
     .then(function(data) {
-      console.log(data)
       for (let i=0; i<data.length; i++){
         let array_data_category = data[i]; //Получение категорий из массива
         let name_category = array_data_category.appellation_category
@@ -247,11 +245,10 @@ form_create_goods.addEventListener('submit', (event) => {
           })
             .then((response) => response.json())
             .then(() => alert('Добавлен новый товар'))
-            .catch((error) => console.error(error));
-          }
         }
-      })
-  });
+      }
+    })
+});
 
 const form_create_characteristics = document.querySelector('#create_characteristics');
 
