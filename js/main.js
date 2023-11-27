@@ -226,30 +226,32 @@ form_create_goods.addEventListener('submit', (event) => {
   const appellation_good = form_create_goods.querySelector('#appellation_good').value;
   const description = form_create_goods.querySelector('#description').value;
   const category_name = form_create_goods.querySelector('#category_name').value;
-
-  const cases_category = {
-    "Процессоры": () => 1,
-    "Материнские платы": () => 2,
-    "Видеокарты": () => 3,
-    "Блоки питания": () => 4,
-    "Оперативная память": () => 5,
-    "Хранение данных": () => 6,
-    "Охлаждение процессора": () => 7,
-  };
-
-  const category_id = cases_category[category_name]();
-
   const owner_id = form_create_goods.querySelector('#owner_id').value;
 
-  fetch('http://127.0.0.1:8000/good/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({appellation_good, description, category_id, owner_id})
-  })
-  .then((response) => response.json())
-  .then(() => alert('Добавлен новый товар'))
-  .catch((error) => console.error(error));
-});
+  const url_category = 'http://127.0.0.1:8000/category/';
+
+  fetch(url_category)
+    .then((resp) => resp.json())
+    .then(function(data) {
+      console.log(data)
+      for (let i=0; i<data.length; i++){
+        let array_data_category = data[i]; //Получение категорий из массива
+        let name_category = array_data_category.appellation_category
+
+        if (category_name == name_category){
+          let category_id = array_data_category.id
+          fetch('http://127.0.0.1:8000/good/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({appellation_good, description, category_id, owner_id})
+          })
+            .then((response) => response.json())
+            .then(() => alert('Добавлен новый товар'))
+            .catch((error) => console.error(error));
+          }
+        }
+      })
+  });
 
 const form_create_characteristics = document.querySelector('#create_characteristics');
 
